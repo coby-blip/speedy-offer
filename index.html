@@ -101,7 +101,9 @@
 
   .sign{display:flex;gap:26px;margin:20px 0 6px}
   .sign .col{flex:1}
-  .sign .rule{border-bottom:1.5px solid #cbd5e1;height:30px}
+  .sign .rule{border-bottom:1.5px solid #cbd5e1;height:30px;position:relative}
+  .sign .sig{position:absolute;left:6px;bottom:1px;font-family:"Snell Roundhand","Savoye LET","Apple Chancery","Brush Script MT",cursive;font-size:27px;color:#15324a;transform:rotate(-3deg);white-space:nowrap;line-height:1}
+  .sign .sigdate{position:absolute;right:6px;bottom:6px;font-size:12px;color:#334155}
   .sign .cap{font-size:11px;color:var(--muted);margin-top:5px}
   .buyerblock{font-size:12.5px;color:#334155;margin-top:2px}
   .buyerblock b{color:var(--ink)}
@@ -202,8 +204,8 @@
       <div class="full">
         <label>Seller may leave contents / belongings</label>
         <div class="seg" id="contSeg">
-          <button type="button" data-v="no" class="on">No — broom clean</button>
-          <button type="button" data-v="yes">Yes — leave anything</button>
+          <button type="button" data-v="no" class="on">No — seller clears it out</button>
+          <button type="button" data-v="yes">Yes — leave it all</button>
           <button type="button" data-v="other">Other</button>
         </div>
         <input id="contOther" placeholder="e.g. Seller may leave the couch; garage can stay full" style="display:none;margin-top:10px">
@@ -300,7 +302,7 @@
         <tr><td class="k">Property condition</td><td class="v">As-is, where-is</td></tr>
         <tr><td class="k">Point of sale</td><td class="v">Buyer assumes POS violations &amp; escrow</td></tr>
         <tr><td class="k">Possession at close</td><td class="v" id="p_occ">Delivered vacant at closing</td></tr>
-        <tr><td class="k">Contents</td><td class="v" id="p_cont">Delivered broom-clean, free of debris</td></tr>
+        <tr><td class="k">Contents</td><td class="v" id="p_cont">All contents in home to be removed by seller</td></tr>
         <tr><td class="k">Title company</td><td class="v" id="p_title">Infinity Title</td></tr>
         <tr id="row_extra" style="display:none"><td class="k">Additional terms</td><td class="v" id="p_extra"></td></tr>
         <tr><td class="k">Offer expires</td><td class="v" id="p_expires">—</td></tr>
@@ -316,7 +318,7 @@
 
       <div class="sign">
         <div class="col"><div class="rule"></div><div class="cap">Seller signature &amp; date</div></div>
-        <div class="col"><div class="rule"></div><div class="cap">Buyer signature &amp; date</div></div>
+        <div class="col"><div class="rule"><span class="sig" id="p_sig">Jacob Socher</span><span class="sigdate" id="p_sigdate"></span></div><div class="cap">Buyer signature &amp; date</div></div>
       </div>
       <div class="buyerblock">
         Buyer: <b id="p_entity">TST Ventures 21 LLC</b> &nbsp;·&nbsp; By: <span id="p_signer">Jacob Socher</span>, <span id="p_signertitle">Managing Member</span>
@@ -373,13 +375,15 @@
       $('p_occ').textContent=`Seller may remain after closing; ${hb} held back at closing until seller vacates`; }
     // contents
     $('contOther').style.display = cont==='other' ? '' : 'none';
-    if(cont==='no') $('p_cont').textContent='Delivered broom-clean, free of debris';
-    else if(cont==='yes') $('p_cont').textContent='Seller may leave any unwanted contents & belongings';
+    if(cont==='no') $('p_cont').textContent='All contents in home to be removed by seller';
+    else if(cont==='yes') $('p_cont').textContent='Seller may leave any and all contents in home';
     else $('p_cont').textContent=$('contOther').value.trim()||'Per attached / to be discussed';
     $('p_title').textContent=$('title').value.trim()||'Infinity Title';
     $('p_expires').textContent=$('expires').value?fmtDate($('expires').value):'—';
     $('p_entity').textContent=$('entity').value.trim()||'TST Ventures 21 LLC';
     $('p_signer').textContent=$('signer').value.trim()||'Jacob Socher';
+    if($('p_sig')) $('p_sig').textContent=$('signer').value.trim()||'Jacob Socher';
+    if($('p_sigdate')) $('p_sigdate').textContent=fmtDate($('date').value)||'';
     $('p_signertitle').textContent=$('signertitle').value.trim()||'Managing Member';
     const ex=$('extra').value.trim();
     $('row_extra').style.display=ex?'':'none'; $('p_extra').textContent=ex;
