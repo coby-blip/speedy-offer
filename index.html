@@ -317,8 +317,8 @@
       </div>
 
       <div class="sign">
+        <div class="col"><div class="rule"><span class="sig" id="p_sig">Jacob Socher</span><span class="sigdate" id="p_sigdate"></span></div><div class="cap"><b id="p_capname">Jacob Socher, Managing Member</b> · Buyer signature &amp; date</div></div>
         <div class="col"><div class="rule"></div><div class="cap">Seller signature &amp; date</div></div>
-        <div class="col"><div class="rule"><span class="sig" id="p_sig">Jacob Socher</span><span class="sigdate" id="p_sigdate"></span></div><div class="cap">Buyer signature &amp; date</div></div>
       </div>
       <div class="buyerblock">
         Buyer: <b id="p_entity">TST Ventures 21 LLC</b> &nbsp;·&nbsp; By: <span id="p_signer">Jacob Socher</span>, <span id="p_signertitle">Managing Member</span>
@@ -385,6 +385,7 @@
     if($('p_sig')) $('p_sig').textContent=$('signer').value.trim()||'Jacob Socher';
     if($('p_sigdate')) $('p_sigdate').textContent=fmtDate($('date').value)||'';
     $('p_signertitle').textContent=$('signertitle').value.trim()||'Managing Member';
+    if($('p_capname')) $('p_capname').textContent=($('signer').value.trim()||'Jacob Socher')+', '+($('signertitle').value.trim()||'Managing Member');
     const ex=$('extra').value.trim();
     $('row_extra').style.display=ex?'':'none'; $('p_extra').textContent=ex;
     save();
